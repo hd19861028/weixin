@@ -1,0 +1,25 @@
+{
+	"name": "wx-common",
+	"version": "1.1.0",
+	"repository": {},
+	"main": "common.js",
+	"author": {
+		"email": "282642547@qq.com",
+		"name": "Mars Hu"
+	},
+	"dependencies": {
+		"crypto": "0.0.3",
+		"node-expat": "2.3.11",
+		"node-uuid": "1.4.7",
+		"q": "1.4.1",
+		"request": "^2.67.0",
+		"qr-image": "3.1.0",
+		"bling-hashes": "1.1.1"
+	},
+	"description": "",
+	"engines": {
+		"node": ">=5.1.1",
+		"node-gyp": ">=3.0.3",
+		"npm": ">=3.3.12"
+	}
+}
