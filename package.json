@@ -1,6 +1,6 @@
 {
 	"name": "wx-common",
-	"version": "1.3.1",
+	"version": "1.3.2",
 	"repository": {},
 	"main": "common.js",
 	"author": {
@@ -8,14 +8,17 @@
 		"name": "Mars Hu"
 	},
 	"dependencies": {
+		"q": "1.4.1",
 		"crypto": "0.0.3",
 		"xml2js": "0.4.16",
 		"node-uuid": "1.4.7",
+		"bling-hashes": "1.1.1",
+		"formidable": "1.0.17",
+		"cron": "^1.1.0",
+		"express": "4.13.1",
 		"redis": "2.4.2",
 		"qr-image": "3.1.0",
-		"formidable": "1.0.17",
-		"bling-hashes": "1.1.1",
-		"express": "4.13.1"
+		"bling-hashes": "1.1.1"
 	},
 	"description": "",
 	"engines": {
