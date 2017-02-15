@@ -1,6 +1,6 @@
 {
 	"name": "wx-common",
-	"version": "1.2.0",
+	"version": "1.3.1",
 	"repository": {},
 	"main": "common.js",
 	"author": {
@@ -9,9 +9,9 @@
 	},
 	"dependencies": {
 		"crypto": "0.0.3",
-		"node-expat": "2.3.11",
+		"xml2js": "0.4.16",
 		"node-uuid": "1.4.7",
-		"request": "^2.67.0",
+		"redis": "2.4.2",
 		"qr-image": "3.1.0",
 		"formidable": "1.0.17",
 		"bling-hashes": "1.1.1",
