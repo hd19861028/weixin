@@ -10,6 +10,63 @@ wx-common是一个npm模块，用于微信开发的公用方法
 npm install wx-common
 ```
 
+<h3>配置</h3>
+
+> 必须将下面的配置设置到global.config全局对象中
+
+```json
+{
+	/** 服务器根目录，可以在启动时动态设置 **/
+	"root": "/data/web/",
+	/** 默认的文件上传保存路径，可以在启动时动态设置 **/
+	"upload_temp": "/data/upload/",
+	/** 上传文件最大尺寸，可以在启动时动态设置 **/
+	"upload_max_size": 100,
+	/** AES加密密钥 **/
+	"ase_key": "ahkdaksdnalksjd",
+	/** 微信公众好有关的配置 **/
+	"website": {
+		/** 微信服务器接口域名 **/
+		"domain": "xxxxxxxx.com",
+		/** 微信公众号groupid **/
+		"groupid": "gh_ahsudjikasndk",
+		/** AppID(应用ID) **/
+		"appid": "ahkdaksdnalksjd.a",
+		/** AppSecret(应用密钥) **/
+		"secret": "ahkdaksdnalksjd",
+		/** Token(令牌) **/
+		"site_token": "ahkdaksdnalksjd",
+		/** openid过期时间 **/
+		"openid_expire": 31536000000
+	},
+	/** redis缓存配置 **/
+	"cache": {
+		"ip": "127.0.0.1",
+		"port": 6379,
+		"timeout": 3000,
+		"expire": 300,
+		"db_count": 16,
+		"enable": true
+	}
+}
+```
+
+<h3>Weixin模块</h3>
+
+> 引入模块
+
+```javascript
+var wx = require('wx-common').weixin;
+```
+
+> 开发 --> 基本设置
+
+```javascript
+//启动服务器配置时，第一次验证所用
+//query是Express的req.query，无需修饰，直接传入
+wx.validateToken(query);
+```
+
 <h3>Secret模块</h3>
 
 > Md5, Sha, HmacMd5, HmacSha用法示例
@@ -204,8 +261,8 @@ common.validPwd(
 require('wx-common').prototype;
 
 //使用须知：
-//		1. 若要使用WriteLog方法， 在项目初始化时需要设置global.config.root = __dirname，或者指定自己喜欢的目录
-//		2. 在global.config.root指定的目录下，必须有一个“log”文件夹
+//	1. 若要使用WriteLog方法， 在项目初始化时需要设置global.config.root = __dirname，或者指定自己喜欢的目录
+//	2. 在global.config.root指定的目录下，必须有一个“log”文件夹
 ```
 
 > Number类型扩展
@@ -255,4 +312,61 @@ var b = a.Clone();
 //记录日志
 var err = new Error('测试错误');
 err.WriteLog();
+```
+
+<h3>Timer计时器模块</h3>
+
+> 引入模块
+
+```javascript
+var Timer = require('wx-common').timer;
+var timer = new Timer(options);
+timer.Start();
+```
+
+> options参数列表
+
+```javascript
+var options = {
+	days: null, //间隔天数
+	hours: null, //间隔小时数
+	minutes: null, //间隔分钟数
+	seconds: 10, //间隔秒数
+	onTick: function(){}
+}
+
+//上面的参数含义是间隔10秒运行一次
+//如果上面这些时间段，无法满足你的要求，那么可以调用下面的方法指定一个时间运行
+timer.SetCronTime('*/10 * * * * *');
+//6个参数的含义如下：
+//秒: 0-59
+//分钟: 0-59
+//小时: 0-23
+//每月的第几天: 1-31
+//每年的第几月: 0-11
+//每周的第几天: 0-6
+
+```
+
+> Timer实例方法
+
+```javascript
+//启动
+timer.Enable();
+//禁用
+timer.Disable();
+//开始并启动，不要重复调用
+timer.Start();
+//停止并清除计时器
+timer.Stop();
+//停止清除计时器并重新开始
+timer.Restart();
+//自定义设置执行间隔
+timer.SetCronTime(interval);
+//检查当前计时器执行时间是否发生变更，如果有，就重启。
+//name只是用来打印计时器的名字，可选参数
+timer.CheckIsChange(interval, name);
+//设置自定义执行间隔，并立刻启动
+//name只是用来打印计时器的名字，可选参数
+timer.StartTimer(interval, name)
 ```
