@@ -14,7 +14,7 @@ npm install wx-common
 
 > 必须将下面的配置设置到global.config全局对象中
 
-```json
+```javascript
 {
 	/** 服务器根目录，可以在启动时动态设置 **/
 	"root": "/data/web/",
@@ -36,6 +36,8 @@ npm install wx-common
 		"secret": "ahkdaksdnalksjd",
 		/** Token(令牌) **/
 		"site_token": "ahkdaksdnalksjd",
+		/** jsapi方法名 **/
+		"jsApiList": [],
 		/** openid过期时间 **/
 		"openid_expire": 31536000000
 	},
@@ -64,7 +66,84 @@ var wx = require('wx-common').weixin;
 ```javascript
 //启动服务器配置时，第一次验证所用
 //query是Express的req.query，无需修饰，直接传入
-wx.validateToken(query);
+var result = wx.validateToken(query);
+if(result === "false"){
+	//失败
+} else {
+	//接入成功
+}
+```
+
+> 发送模板消息
+
+```javascript
+wx.push_notise(openid, '模板消息id', data, '点击模板的回调URL(可空)');
+//data属性，与模板消息的内容字段是对应关系。
+//假设模板消息有字段title, keyword1, keyword2, desc，那么data可以如下设置
+//所有字段的值，都支持String和Object两种格式
+//注意：只能设置字体颜色，不能设置字体大小
+var data = {
+	"title": "测试标题",
+	"keyword1": "测试内容1",
+	"keyword2": "测试内容2",
+	"desc": {
+		"value": "这是模板消息底部描述信息",
+		"color": "#cccccc"
+	}
+}
+```
+
+> 发送客服消息
+
+```javascript
+wx.push_msg(openid, message, callback);
+//message: 
+//	类型为string：推送纯文本消息
+//	类型为json或者array时，推送图文消息
+//	    json示例: {title: "图文标题", description: "图文描述", link_url: "跳转链接", pic_url: "图片路径"}
+//	    array示例: [{title: "图文标题", link_url: "跳转链接", pic_url: "图片路径"}]
+```
+
+> 回复消息
+
+```javascript
+//Event == "CLICK时，服务台向微信用户回复的消息
+//回复文本消息
+wx.reply_news(openid, '谢谢关注', 'text');
+//回复图文消息
+wx.reply_news(openid, msgs, 'news');
+//	msgs对象示例: 
+//	    [{ title: "图文标题", link: "跳转链接", pic: "图片路径", description: "图文描述" }]
+```
+
+> 获取Weixin接口令牌
+
+```javascript
+//返回Promise
+wx.get_access_token()
+```
+
+> 获取jsapi ticket
+
+```javascript
+//返回Promise
+//pagename: 使用jaapi的页面名
+//此外，global.config.website.jsApiList对象中要设置需要使用的方法名
+wx.get_jsapi_ticket(pagename)
+```
+
+> 下载媒体对象，比如图片，小视频，语音等等
+
+```javascript
+wx.download_media(media_id, callback, saveAs);
+//callback(error, data)
+```
+
+> 根据指定的url生成二维码
+
+```javascript
+wx.create_qr_image(web_url, callback);
+//callback(save_as)
 ```
 
 <h3>Secret模块</h3>
