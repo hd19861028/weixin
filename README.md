@@ -163,15 +163,15 @@ var hash = common.hash('原字符串')
 > 处理表单上传的文件
 
 ```javascript
-//req: 			express的req
-//res: 			express的res
+//req: 		express的req
+//res: 		express的res
 //callback:	2个参数，分别是fields, files，2个对象都是数组
 //save_as:	文件保存的目录(文件夹路径)
 common.upload_file(req, res, callback, save_as)
 
 //此外，使用此方法，还必须在global对象上设置2个属性
 global.config.upload_temp		//表示文件保存的默认路径
-global.config.upload_max_size//表示最多允许上传多大的文件，int类型，单位m
+global.config.upload_max_size	//表示最多允许上传多大的文件，int类型，单位m
 ```
 
 > 获取guid
@@ -194,4 +194,65 @@ common.validPwd(
 	pwd_db, //数据库存储的密码 
 	salt //数据库存储的密码对应的盐值
 )
+```
+
+<h3>Prototype原型扩展</h3>
+
+> 引入模块
+
+```javascript
+require('wx-common').prototype;
+
+//使用须知：
+//		1. 若要使用WriteLog方法， 在项目初始化时需要设置global.config.root = __dirname，或者指定自己喜欢的目录
+//		2. 在global.config.root指定的目录下，必须有一个“log”文件夹
+```
+
+> Number类型扩展
+
+```javascript
+//时间戳转换成指定的日期字符串
+Date.now().Format('yyyy-MM-dd HH:mm:ss.fff');
+```
+
+> String类型扩展
+
+```javascript
+//判断当前字符串是否包含Emoji字符
+str.HasEmoji()
+//将当前字符串写入log文件中
+//isError: true|false， 是不是错误消息。如果true，将会记录到error.log中，否则记录到info
+str.WriteLog(isError);
+```
+
+> global对象扩展
+
+```javascript
+//获取当前日期的utc时间戳
+//dt: Date对象，为空则指定当前时间
+global.GetUTC(dt);
+//记录日志
+global.WriteLog(Object|String, isError);
+//Express框架，从post或put请求的req中获取请求参数
+//req:		express框架req对象
+//isJSON:	如果传入的参数是json字符串，请传入true，如果是a=1&b=2&c=3的形式，请传入false
+global.BodyParse(req, isJSON);
+//对象深拷贝
+global.CloneObject(object)
+```
+
+> Array类型扩展
+
+```javascript
+//数组复制
+var a = [1, 2, 3, 4, 5];
+var b = a.Clone();
+```
+
+> Error类型扩展
+
+```javascript
+//记录日志
+var err = new Error('测试错误');
+err.WriteLog();
 ```
