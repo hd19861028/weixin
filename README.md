@@ -244,10 +244,6 @@ request.Post(url, JSON.stringify(data), header, isStream);
 request.Put(url, JSON.stringify(data), header, isStream);
 request.Get(url, header, isStream);
 request.Delete(url, header, isStream);
-request.Download(url, saveAsUrl);
-request.FileLength(url);
-//试用中
-request.DownloadParallel(url, saveAsUrl, maxLength, cpus);
 ```
 
 > 文件下载
