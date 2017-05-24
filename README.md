@@ -1,14 +1,17 @@
 # wx-common
 
-wx-common是一个node.js模块，提供一般项目开发的公共库
+wx-common是一个node.js模块，提供微信项目开发的公共库
 
-<h3>安装</h3>
+* [安装](#install)
+* [添加全局配置](#config)
+
+<h3 name="install">安装</h3>
 
 ```javascript
 npm install wx-common
 ```
 
-<h3>配置</h3>
+<h3 name="config">配置</h3>
 
 > 必须将下面的配置设置到global.config全局对象中
 
@@ -51,7 +54,7 @@ npm install wx-common
 }
 ```
 
-<h3>Weixin模块</h3>
+<h3>微信开发</h3>
 
 > 引入模块
 
