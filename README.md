@@ -4,6 +4,12 @@ wx-common是一个node.js模块，提供微信项目开发的公共库
 
 * [安装](#install)
 * [添加全局配置](#config)
+* [微信开发](#weixin)
+* [加密模块](#secret)
+* [Http Request模块](#request)
+* [Common模块](#common)
+* [原型扩展](#prototype)
+* [Timer计时器模块](#timer)
 
 <h3 name="install">安装</h3>
 
@@ -11,7 +17,7 @@ wx-common是一个node.js模块，提供微信项目开发的公共库
 npm install wx-common
 ```
 
-<h3 name="config">配置</h3>
+<h3 name="config">添加全局配置</h3>
 
 > 必须将下面的配置设置到global.config全局对象中
 
@@ -54,7 +60,7 @@ npm install wx-common
 }
 ```
 
-<h3>微信开发</h3>
+<h3 name="weixin">微信开发</h3>
 
 > 引入模块
 
@@ -147,7 +153,7 @@ wx.create_qr_image(web_url, callback);
 //callback(save_as)
 ```
 
-<h3>Secret模块</h3>
+<h3 name="secret">加密模块</h3>
 
 > Md5, Sha, HmacMd5, HmacSha用法示例
 
@@ -190,7 +196,7 @@ console.log(_source == source) //true
 // 若用其他语言对其进行解密，必须先将{aes_key}进行md5加密
 ```
 
-<h3>Http Request模块</h3>
+<h3 name="request">Http Request模块</h3>
 
 > 参数描述
 
@@ -267,7 +273,7 @@ request.FileLength(url);
 request.DownloadParallel(url, saveAsUrl, maxLength, cpus);
 ```
 
-<h3>Common模块</h3>
+<h3 name="common">Common模块</h3>
 
 > 引入模块
 
@@ -329,7 +335,7 @@ common.validPwd(
 )
 ```
 
-<h3>Prototype原型扩展</h3>
+<h3 name="prototype">原型扩展</h3>
 
 > 引入模块
 
@@ -390,7 +396,7 @@ var err = new Error('测试错误');
 err.WriteLog();
 ```
 
-<h3>Timer计时器模块</h3>
+<h3 name="timer">Timer计时器模块</h3>
 
 > 引入模块
 
