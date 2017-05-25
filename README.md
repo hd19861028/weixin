@@ -62,13 +62,25 @@ npm install wx-common
 
 <h3 name="weixin">微信开发</h3>
 
+功能概要
+
+* [启动开发者模式](#wx1)
+* [发送模板消息](#wx2)
+* [发送客服消息](#wx3)
+* [回复消息](#wx4)
+* [获取Access Token](#wx5)
+* [获取jsapi ticket](#wx6)
+* [下载媒体对象](#wx7)
+* [生成二维码](#wx8)
+
 > 引入模块
 
 ```javascript
 var wx = require('wx-common').weixin;
 ```
 
-> 开发 --> 基本设置
+<a name="wx1"></a>
+> 启动开发者模式
 
 ```javascript
 //启动服务器配置时，第一次验证所用
@@ -81,6 +93,7 @@ if(result === "false"){
 }
 ```
 
+<a name="wx2"></a>
 > 发送模板消息
 
 ```javascript
@@ -100,6 +113,7 @@ var data = {
 }
 ```
 
+<a name="wx3"></a>
 > 发送客服消息
 
 ```javascript
@@ -111,6 +125,7 @@ wx.push_msg(openid, message, callback);
 //	    array示例: [{title: "图文标题", link_url: "跳转链接", pic_url: "图片路径"}]
 ```
 
+<a name="wx4"></a>
 > 回复消息
 
 ```javascript
@@ -123,13 +138,15 @@ wx.reply_news(openid, msgs, 'news');
 //	    [{ title: "图文标题", link: "跳转链接", pic: "图片路径", description: "图文描述" }]
 ```
 
-> 获取Weixin接口令牌
+<a name="wx5"></a>
+> 获取Access Token
 
 ```javascript
 //返回Promise
 wx.get_access_token()
 ```
 
+<a name="wx6"></a>
 > 获取jsapi ticket
 
 ```javascript
@@ -139,6 +156,7 @@ wx.get_access_token()
 wx.get_jsapi_ticket(pagename)
 ```
 
+<a name="wx7"></a>
 > 下载媒体对象，比如图片，小视频，语音等等
 
 ```javascript
@@ -146,7 +164,8 @@ wx.download_media(media_id, callback, saveAs);
 //callback(error, data)
 ```
 
-> 根据指定的url生成二维码
+<a name="wx8"></a>
+> 生成二维码
 
 ```javascript
 wx.create_qr_image(web_url, callback);
