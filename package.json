@@ -1,6 +1,6 @@
 {
 	"name": "wx-common",
-	"version": "1.6.0",
+	"version": "1.6.2",
 	"repository": {},
 	"main": "common.js",
 	"author": {

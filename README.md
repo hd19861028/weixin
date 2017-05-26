@@ -482,7 +482,7 @@ var fs = require('fs');
 var fsPromise = require('wx-common').fs;
 ```
 
-> 用法举例
+> 异步用法举例
 
 ```javascript
 //创建文件夹
@@ -491,4 +491,11 @@ fs.mkdir(path, function(err){});
 fsPromise.mkdir(path).then(function(){}, function(err){});
 
 //注意，只实现了异步方法，并未实现类似mkdirSync的同步方法。
+```
+
+> 使用node原生fs库
+
+```javascript
+//创建文件夹
+fsPromise.node.mkdir(path, function(err){});
 ```
