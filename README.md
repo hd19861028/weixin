@@ -10,6 +10,7 @@ wx-common是一个node.js模块，提供微信项目开发的公共库
 * [Common模块](#common)
 * [原型扩展](#prototype)
 * [Timer计时器模块](#timer)
+* [fs的Promise实现](#fs)
 
 <h3 name="install">安装</h3>
 
@@ -470,4 +471,24 @@ timer.CheckIsChange(interval, name);
 //设置自定义执行间隔，并立刻启动
 //name只是用来打印计时器的名字，可选参数
 timer.StartTimer(interval, name)
+```
+
+<h3 name="fs">fs的Promise实现</h3>
+
+> 引入模块
+
+```javascript
+var fs = require('fs');
+var fsPromise = require('wx-common').fs;
+```
+
+> 用法举例
+
+```javascript
+//创建文件夹
+fs.mkdir(path, function(err){});
+//使用fs-promise方式如下
+fsPromise.mkdir(path).then(function(){}, function(err){});
+
+//注意，只实现了异步方法，并未实现类似mkdirSync的同步方法。
 ```

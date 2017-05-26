@@ -8,3 +8,4 @@ exports.request = require('./lib/http-request');
 exports.prototype = require('./lib/prototype');
 exports.agent = require('./lib/agent');
 exports.timer = require('./lib/timer');
+exports.fs = require('./lib/fs-promise');
