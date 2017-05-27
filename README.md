@@ -400,9 +400,19 @@ global.BodyParse(req, isJSON);
 global.CloneObject(object);
 //下载Excel2007
 var filename = "测试文件test.xlsx";
-var sheet = "测试sheet";
-var data = [[1,2,3], [4,5,6], [7,8,9]];
-global.DownloadExcel(res, filename, sheet, data);
+var data = [
+	{ '得主': '王重阳', '手机': '18911112222', '奖品': '测试奖品', '中奖时间': '2017-05-26 09:39:59'},
+	{ '得主': '小李飞刀', '手机': '18911112222', '奖品': '测试奖品', '中奖时间': '2017-05-26 09:39:59' }
+]
+/*
+ * data设置成下面这个样子，可以导出多个sheet
+ * data = [
+ * 	[......],
+ * 	[......]
+ * ]
+ *
+ */
+global.DownloadExcel(res, filename, data);
 ```
 
 > Array类型扩展
