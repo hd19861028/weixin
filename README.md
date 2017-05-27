@@ -397,7 +397,12 @@ global.WriteLog(Object|String, isError);
 //isJSON:	如果传入的参数是json字符串，请传入true，如果是a=1&b=2&c=3的形式，请传入false
 global.BodyParse(req, isJSON);
 //对象深拷贝
-global.CloneObject(object)
+global.CloneObject(object);
+//下载Excel2007
+var filename = "测试文件test.xlsx";
+var sheet = "测试sheet";
+var data = [[1,2,3], [4,5,6], [7,8,9]];
+global.DownloadExcel(res, filename, sheet, data);
 ```
 
 > Array类型扩展
