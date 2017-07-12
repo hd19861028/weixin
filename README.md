@@ -166,6 +166,15 @@ wx.download_media(media_id, callback, saveAs);
 ```
 
 <a name="wx8"></a>
+> 生成带场景值的二维码
+
+```javascript
+//scene：数据类型必须是string或者Int32
+//expire：过期时间(秒)，最大不得超过2592000，也就是30天，默认值259200，如果设置-1，将生成永久二维码
+wx.create_qr(scene, expire); //返回promise
+```
+
+<a name="wx8"></a>
 > 生成二维码
 
 ```javascript
