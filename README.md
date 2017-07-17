@@ -364,6 +364,23 @@ common.validPwd(
 )
 ```
 
+> 删除文件夹下过期文件
+
+```javascript
+//需要清理的目录，不递归目录，只删除当前目录下的文件
+var dir = '/data/logs/test-project/';
+//指定一个天数，设置成5，意思是删除5天前的所有文件
+//此功能一般用于清理过去日志文件
+var expireDays = 5;
+
+common.DeleteExpireFiles(dir, expireDays)
+	.then(function(deletedFiles){
+		//被删除的文件列表：
+		console.log(deletedFiles);		
+	})
+
+```
+
 <h3 name="prototype">原型扩展</h3>
 
 > 引入模块
