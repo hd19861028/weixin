@@ -11,6 +11,7 @@ wx-common是一个node.js模块，提供微信项目开发的公共库
 * [原型扩展](#prototype)
 * [Timer计时器模块](#timer)
 * [fs的Promise实现](#fs)
+* [仿Nginx代理转发(支持负载均衡配置)](#agent)
 
 <h3 name="install">安装</h3>
 
@@ -540,3 +541,50 @@ fsPromise.mkdir(path).then(function(){}, function(err){});
 //创建文件夹
 fsPromise.node.mkdir(path, function(err){});
 ```
+
+<h3 name="agent">仿Nginx代理转发</h3>
+
+> 引入模块
+
+```javascript
+var agent = require('wx-common').agent;
+```
+
+> 一般用法
+
+```javascript
+agent.startAgent({
+        port: 8888, //代理服务器端口
+        forwardPort: 9999, //转发到目标端口
+        hosts: ['127.0.0.1'] //目标服务器host地址
+})
+```
+
+> 负载均衡权值设置
+
+```javascript
+agent.startAgent({
+	port: 8888,
+	hosts: [{
+		host: '127.0.0.1',
+		port: 9999,
+		weight: 100 //含义与nginx一致，表示负载均衡的权值
+	}, {
+		host: '127.0.0.1',
+		port: 9999,
+		weight: 100
+	}]
+})
+```
+
+> 转发HTTPS
+
+```javascript
+agent.startAgent({
+        port: 8888, 
+        forwardPort: 443, 
+        https: true, //默认不开启，只有该属性为true，才开启
+        hosts: ['127.0.0.1'] 
+})
+```
+
