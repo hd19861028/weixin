@@ -550,12 +550,17 @@ fsPromise.node.mkdir(path, function(err){});
 var agent = require('wx-common').agent;
 ```
 
-> 一般用法
+> 基本用法
 
 ```javascript
 agent.startAgent({
         port: 8888, //代理服务器端口
         forwardPort: 9999, //转发到目标端口
+        middleware: function(req, res, next){
+        	//支持express中间件语法
+        	console.log(req.headers)
+        	next();
+        },
         hosts: ['127.0.0.1'] //目标服务器host地址
 })
 ```
