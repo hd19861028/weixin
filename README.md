@@ -214,16 +214,16 @@ var Secret = common.secret;
 var sec = new Secret();
 
 var source = "123456";
-var aes_key = "abcdef";
-var aes_key_md5 = sec.Encrypt(aes_key, 'md5');//e80b5017098950fc58aad83c8c14978e
+var aes_key = "1234567890123456";
 
 var target = sec.ASE_Encrypt(source, aes_key);
-console.log(target) //cc4a1d030b288cfeb62cfa586ac9e395
+console.log(target) //c97554911e393c5cf451fa5b0c1f3f7b
 var _source = sec.ASE_Decrypt(target, aes_key);
 console.log(_source == source) //true
 
-// 这种加密方式，与网上绝大多数的在线加密结果都不一样。
-// 若用其他语言对其进行解密，必须先将{aes_key}进行md5加密
+//验证地址：http://tool.chacuo.net/cryptaes
+//参数配置如下
+//加密模式：ECB，填充：pkcs5padding，数据块：128位，偏移量：空，输出：hex，字符集：utf8
 ```
 
 <h3 name="request">Http Request模块</h3>
