@@ -1,0 +1,88 @@
+    <section class="suite">
+      <h1>&#x6D4B;&#x8BD5;&#x6587;&#x4EF6;&#xFF1A;index.js</h1>
+      <dl>
+        <dt>xmlToJson</dt>
+        <dd><pre><code>common.xmlToJson(_xml, (json, err) =&#x3E; {
+&#x9;assert.ifError(err);
+})</code></pre></dd>
+        <dt>jsonToXml</dt>
+        <dd><pre><code>try {
+&#x9;common.jsonToXml(_json);
+&#x9;assert.ok(true);
+} catch(e) {
+&#x9;assert.ifError(e);
+}</code></pre></dd>
+        <dt>hash</dt>
+        <dd><pre><code>var hash = common.hash(JSON.stringify(_json));
+expect(hash).to.be.equal(&#x27;883297290&#x27;);</code></pre></dd>
+        <dt>makePwd</dt>
+        <dd><pre><code>co(function*() {
+&#x9;try {
+&#x9;&#x9;var r = yield common.makePwd(_pwd);
+&#x9;&#x9;assert.ok(true);
+&#x9;} catch(e) {
+&#x9;&#x9;assert.ifError(e);
+&#x9;}
+})</code></pre></dd>
+        <dt>validPwd</dt>
+        <dd><pre><code>co(function*() {
+&#x9;try {
+&#x9;&#x9;var r = yield common.makePwd(_pwd);
+&#x9;&#x9;r = yield common.validPwd(_pwd, r.pwd, r.salt);
+&#x9;&#x9;expect(r).to.be.equal(true);
+&#x9;} catch(e) {
+&#x9;&#x9;assert.ifError(e);
+&#x9;}
+})</code></pre></dd>
+      </dl>
+    </section>
+    <section class="suite">
+      <h1>&#x6D4B;&#x8BD5;&#x6587;&#x4EF6;&#xFF1A;secret.js</h1>
+      <dl>
+        <dt>md5</dt>
+        <dd><pre><code>var pwd = sec.Encrypt(source, &#x27;md5&#x27;);
+expect(pwd).to.be.equal(&#x27;e10adc3949ba59abbe56e057f20f883e&#x27;);</code></pre></dd>
+        <dt>sha1</dt>
+        <dd><pre><code>var pwd = sec.Encrypt(source, &#x27;sha1&#x27;);
+expect(pwd).to.be.equal(&#x27;7c4a8d09ca3762af61e59520943dc26494f8941b&#x27;);</code></pre></dd>
+        <dt>sha256</dt>
+        <dd><pre><code>var pwd = sec.Encrypt(source, &#x27;sha256&#x27;);
+expect(pwd).to.be.equal(&#x27;8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92&#x27;);</code></pre></dd>
+        <dt>sha512</dt>
+        <dd><pre><code>var pwd = sec.Encrypt(source, &#x27;sha512&#x27;);
+expect(pwd).to.be.equal(&#x27;ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413&#x27;);</code></pre></dd>
+        <dt>hmac md5</dt>
+        <dd><pre><code>var pwd = sec.Encrypt(source, &#x27;md5&#x27;, key);
+expect(pwd).to.be.equal(&#x27;30ce71a73bdd908c3955a90e8f7429ef&#x27;);</code></pre></dd>
+        <dt>hmac sha1</dt>
+        <dd><pre><code>var pwd = sec.Encrypt(source, &#x27;sha1&#x27;, key);
+expect(pwd).to.be.equal(&#x27;74b55b6ab2b8e438ac810435e369e3047b3951d0&#x27;);</code></pre></dd>
+        <dt>hmac sha256</dt>
+        <dd><pre><code>var pwd = sec.Encrypt(source, &#x27;sha256&#x27;, key);
+expect(pwd).to.be.equal(&#x27;b8ad08a3a547e35829b821b75370301dd8c4b06bdd7771f9b541a75914068718&#x27;);</code></pre></dd>
+        <dt>hmac sha512</dt>
+        <dd><pre><code>var pwd = sec.Encrypt(source, &#x27;sha512&#x27;, key);
+expect(pwd).to.be.equal(&#x27;4899f48b7873797086fc392ed8074b34306f79145cf0f9d1757e806da2d43f3876b3c762f38015f2d3593a595ae607a6e0aa103a2a5fe502cf95051c9cd62ee1&#x27;);</code></pre></dd>
+        <dt>CreateSign</dt>
+        <dd><pre><code>var pwd = sec.CreateSign(source, key, ts);
+assert.ok(true);</code></pre></dd>
+        <dt>ValidSign</dt>
+        <dd><pre><code>var pwd = sec.CreateSign(source, key, ts);
+var r = sec.ValidSign(source, key, ts, pwd);
+expect(r).to.be.equal(1);</code></pre></dd>
+        <dt>Sign</dt>
+        <dd><pre><code>var pwd = sec.Sign(source, key);
+assert.ok(true);</code></pre></dd>
+        <dt>Unsign</dt>
+        <dd><pre><code>var pwd = sec.Sign(source, key);
+var r = sec.Unsign(pwd, key);
+expect(r).to.be.equal(source);</code></pre></dd>
+        <dt>ASE_Encrypt</dt>
+        <dd><pre><code>var target = sec.ASE_Encrypt(source, aes_key);
+expect(target).to.be.equal(&#x27;c97554911e393c5cf451fa5b0c1f3f7b&#x27;);</code></pre></dd>
+        <dt>ASE_Decrypt</dt>
+        <dd><pre><code>var target = sec.ASE_Encrypt(source, aes_key);
+var _source = sec.ASE_Decrypt(target, aes_key);
+expect(_source).to.be.equal(source);</code></pre></dd>
+      </dl>
+    </section>
