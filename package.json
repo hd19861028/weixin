@@ -8,9 +8,8 @@
     "name": "Mars Hu"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha -u bdd test/*.js",
-    "output": "npm test --recursive -R markdown > TEST.md",
-    "testcase": "node_modules/.bin/mocha -u bdd test/*.js --recursive -R doc > test/testcase.html"
+    "test": "node_modules/.bin/mocha -u tdd test/*.js",
+    "testcase": "node_modules/.bin/mocha -u tdd test/*.js --recursive -R doc > test/testcase.html"
   },
   "dependencies": {
     "q": "1.4.1",
