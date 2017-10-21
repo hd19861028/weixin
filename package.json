@@ -25,6 +25,7 @@
     "qr-image": "3.1.0"
   },
   "description": "",
+  "homepage": "https://github.com/hd19861028/wx-common.git",
   "engines": {
     "node": ">=5.1.1",
     "node-gyp": ">=3.0.3",
