@@ -25,7 +25,14 @@
     "qr-image": "3.1.0"
   },
   "description": "",
-  "homepage": "https://github.com/hd19861028/wx-common.git",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hd19861028/wx-common.git"
+  },
+  "keywords": [
+    "weixin",
+    "common"
+  ],
   "engines": {
     "node": ">=5.1.1",
     "node-gyp": ">=3.0.3",
