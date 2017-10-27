@@ -63,13 +63,13 @@ expect(pwd).to.be.equal(&#x27;b8ad08a3a547e35829b821b75370301dd8c4b06bdd7771f9b5
         <dt>hmac sha512</dt>
         <dd><pre><code>var pwd = sec.Encrypt(source, &#x27;sha512&#x27;, key);
 expect(pwd).to.be.equal(&#x27;4899f48b7873797086fc392ed8074b34306f79145cf0f9d1757e806da2d43f3876b3c762f38015f2d3593a595ae607a6e0aa103a2a5fe502cf95051c9cd62ee1&#x27;);</code></pre></dd>
-        <dt>CreateSign</dt>
-        <dd><pre><code>var pwd = sec.CreateSign(source, key, ts);
+        <dt>CreateToken</dt>
+        <dd><pre><code>var pwd = sec.CreateToken(source, key, ts);
 assert.ok(true);</code></pre></dd>
-        <dt>ValidSign</dt>
-        <dd><pre><code>var pwd = sec.CreateSign(source, key, ts);
-var r = sec.ValidSign(source, key, ts, pwd);
-expect(r).to.be.equal(1);</code></pre></dd>
+        <dt>ValidToken</dt>
+        <dd><pre><code>var pwd = sec.CreateToken(source, key, ts);
+var r = sec.ValidToken(source, key, ts, pwd);
+expect(r).to.be.equal(true);</code></pre></dd>
         <dt>Sign</dt>
         <dd><pre><code>var pwd = sec.Sign(source, key);
 assert.ok(true);</code></pre></dd>

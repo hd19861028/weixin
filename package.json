@@ -1,7 +1,10 @@
 {
   "name": "wx-common",
-  "version": "1.6.26",
-  "repository": {},
+  "version": "2.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hd19861028/wx-common.git"
+  },
   "main": "common.js",
   "author": {
     "email": "282642547@qq.com",
@@ -25,10 +28,6 @@
     "qr-image": "3.1.0"
   },
   "description": "",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/hd19861028/wx-common.git"
-  },
   "keywords": [
     "weixin",
     "common"

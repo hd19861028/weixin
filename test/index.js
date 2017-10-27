@@ -53,8 +53,7 @@ describe('测试文件：index.js', function() {
 });
 
 describe('测试文件：secret.js', function() {
-	var Secret = require('../lib/secret.js');
-	var sec = new Secret();
+	var sec = require('../lib/secret.js');
 	var source = "123456";
 	var key = "123456";
 	var aes_key = "1234567890123456";
@@ -100,15 +99,15 @@ describe('测试文件：secret.js', function() {
 		expect(pwd).to.be.equal('4899f48b7873797086fc392ed8074b34306f79145cf0f9d1757e806da2d43f3876b3c762f38015f2d3593a595ae607a6e0aa103a2a5fe502cf95051c9cd62ee1');
 	});
 
-	it('CreateSign', function() {
-		var pwd = sec.CreateSign(source, key, ts);
+	it('CreateToken', function() {
+		var pwd = sec.CreateToken(source, key, ts);
 		assert.ok(true);
 	});
 
-	it('ValidSign', function() {
-		var pwd = sec.CreateSign(source, key, ts);
-		var r = sec.ValidSign(source, key, ts, pwd);
-		expect(r).to.be.equal(1);
+	it('ValidToken', function() {
+		var pwd = sec.CreateToken(source, key, ts);
+		var r = sec.ValidToken(source, key, ts, pwd);
+		expect(r).to.be.equal(true);
 	});
 
 	it('Sign', function() {

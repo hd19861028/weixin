@@ -190,8 +190,7 @@ wx.create_qr_image(web_url, callback);
 ```javascript
 //在线验证：http://tool.chinaz.com/tools/hash.aspx
 var common = require('wx-common');
-var Secret = common.secret;
-var sec = new Secret();
+var sec = common.secret;
 
 var source = "123456";
 var key = "123456";
@@ -210,8 +209,7 @@ for (var i = 0; i < method.length; i++) {
 
 ```javascript
 var common = require('wx-common');
-var Secret = common.secret;
-var sec = new Secret();
+var sec = common.secret;
 
 var source = "123456";
 var aes_key = "1234567890123456";
@@ -224,6 +222,21 @@ console.log(_source == source) //true
 //验证地址：http://tool.chacuo.net/cryptaes
 //参数配置如下
 //加密模式：ECB，填充：pkcs5padding，数据块：128位，偏移量：空，输出：hex，字符集：utf8
+```
+
+> 公私钥验证
+
+```javascript
+var common = require('wx-common');
+var sec = common.secret;
+
+var publicKey = "123456";
+var privateKey = "123456";
+var ts = ~~(Date.now() / 1000);
+
+var token = sec.CreateToken(publicKey, privateKey, ts);
+var r = sec.ValidToken(publicKey, privateKey, ts, token);
+console.log(r); //true
 ```
 
 <h3 name="request">Http Request模块</h3>

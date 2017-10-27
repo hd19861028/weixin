@@ -1,3 +1,4 @@
 /run.bat
 /.project
 /node_modules
+/package-lock.json
