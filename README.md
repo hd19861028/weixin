@@ -349,6 +349,14 @@ global.config.upload_max_size	//表示最多允许上传多大的文件，int类
 var guid = common.guid()
 ```
 
+> 获取shortid
+
+```javascript
+var shortid = common.shortid();
+//可以自定义长度，默认长度9
+shortid = common.shortid(12);
+```
+
 > 密码和盐值
 
 ```javascript
