@@ -324,6 +324,12 @@ request.DownloadParallel(url, saveAsUrl, maxLength, cpus);
 var common = require('wx-common').common;
 ```
 
+> 读取config.json
+
+```javascript
+//json文件中支持/** xxxx **/格式的多行注释
+const config = common.loadJsonFile('./config.json');
+
 > XML与JSON互转
 
 ```javascript

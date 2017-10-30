@@ -1,6 +1,13 @@
     <section class="suite">
       <h1>&#x6D4B;&#x8BD5;&#x6587;&#x4EF6;&#xFF1A;index.js</h1>
       <dl>
+        <dt>loadJsonFile</dt>
+        <dd><pre><code>try {
+&#x9;var r = common.loadJsonFile(&#x27;./config.json&#x27;);
+&#x9;assert.ok(true);
+} catch(e) {
+&#x9;assert.ifError(e);
+}</code></pre></dd>
         <dt>xmlToJson</dt>
         <dd><pre><code>common.xmlToJson(_xml, (json, err) =&#x3E; {
 &#x9;assert.ifError(err);

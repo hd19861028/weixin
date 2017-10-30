@@ -8,6 +8,15 @@ describe('测试文件：index.js', function() {
 	var _xml = `<xml><appid>123</appid></xml>`;
 	var _pwd = "123456";
 
+	it('loadJsonFile', function() {
+		try {
+			var r = common.loadJsonFile('./config.json');
+			assert.ok(true);
+		} catch(e) {
+			assert.ifError(e);
+		}
+	});
+
 	it('xmlToJson', function() {
 		common.xmlToJson(_xml, (json, err) => {
 			assert.ifError(err);
