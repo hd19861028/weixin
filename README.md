@@ -190,7 +190,7 @@ wx.create_qr_image(web_url, callback);
 ```javascript
 //在线验证：http://tool.chinaz.com/tools/hash.aspx
 var common = require('wx-common');
-var sec = common.Secret;
+var sec = common.secret;
 
 var source = "123456";
 var key = "123456";
