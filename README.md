@@ -209,7 +209,7 @@ for (var i = 0; i < method.length; i++) {
 
 ```javascript
 var common = require('wx-common');
-var sec = common.secret;
+var sec = common.Secret;
 
 var source = "123456";
 var aes_key = "1234567890123456";
@@ -228,7 +228,7 @@ console.log(_source == source) //true
 
 ```javascript
 var common = require('wx-common');
-var sec = common.secret;
+var sec = common.Secret;
 
 var publicKey = "123456";
 var privateKey = "123456";
