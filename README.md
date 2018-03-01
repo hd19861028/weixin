@@ -441,17 +441,21 @@ str.WriteLog(isError);
 > global对象扩展
 
 ```javascript
-//获取当前日期的utc时间戳
-//dt: Date对象，为空则指定当前时间
-global.GetUTC(dt);
 //记录日志
 global.WriteLog(Object|String, isError);
+
 //Express框架，从post或put请求的req中获取请求参数
 //req:		express框架req对象
 //isJSON:	如果传入的参数是json字符串，请传入true，如果是a=1&b=2&c=3的形式，请传入false
 global.BodyParse(req, isJSON);
-//对象深拷贝
-global.CloneObject(object);
+
+//锁机制，将某个接口从并发改为串行执行
+var lockId = 1;
+//创建锁
+var lock = await Lock.Open(lockId);
+//释放锁
+await Lock.Close(lock);
+
 //下载Excel2007
 var filename = "测试文件test.xlsx";
 var data = [
