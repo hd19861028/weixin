@@ -1,6 +1,6 @@
 {
 	"name": "wx-common",
-	"version": "2.2.1",
+	"version": "2.2.2",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/hd19861028/wx-common.git"
