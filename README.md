@@ -227,6 +227,9 @@ console.log(_source == source) //true
 > RSA公私钥验证
 
 ```javascript
+//只是验证签名，如果想利用公私钥加密&解密，移步至
+//https://github.com/rzcoder/node-rsa
+
 var fs = require('fs');
 var path = require('path');
 var common = require('wx-common');
