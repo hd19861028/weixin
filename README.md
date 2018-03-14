@@ -209,7 +209,7 @@ for (var i = 0; i < method.length; i++) {
 
 ```javascript
 var common = require('wx-common');
-var sec = common.Secret;
+var sec = common.secret;
 
 var source = "123456";
 var aes_key = "1234567890123456";
@@ -224,18 +224,22 @@ console.log(_source == source) //true
 //加密模式：ECB，填充：pkcs5padding，数据块：128位，偏移量：空，输出：hex，字符集：utf8
 ```
 
-> 公私钥验证
+> RSA公私钥验证
 
 ```javascript
+var fs = require('fs');
+var path = require('path');
 var common = require('wx-common');
-var sec = common.Secret;
+var sec = common.secret;
 
-var publicKey = "123456";
-var privateKey = "123456";
-var ts = ~~(Date.now() / 1000);
+//生成私钥：openssl genrsa -out ~/.ssh/id_rsa 2048
+var privateKey = fs.readFileSync(path.join('/root/.ssh/', 'id_rsa')).toString();
+//生成公钥：openssl rsa -in ~/.ssh/id_rsa -pubout -out ~/.ssh/id_rsa.pub
+var publicKey = fs.readFileSync(path.join('/root/.ssh/', 'id_rsa.pub')).toString();
+var source = "123456";
 
-var token = sec.CreateToken(publicKey, privateKey, ts);
-var r = sec.ValidToken(publicKey, privateKey, ts, token);
+var secretResult = sec.RSA.Create(source, privateKey);
+var r = sec.RSA.Valid(source, secretResult, publicKey);
 console.log(r); //true
 ```
 
