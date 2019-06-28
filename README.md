@@ -2,6 +2,7 @@
 
 wx-common是一个node.js模块，提供微信项目开发的公共库
 
+* [命令行工具](#cli)
 * [安装](#install)
 * [添加全局配置](#config)
 * [微信开发](#weixin)
@@ -10,8 +11,89 @@ wx-common是一个node.js模块，提供微信项目开发的公共库
 * [Common模块](#common)
 * [原型扩展](#prototype)
 * [Timer计时器模块](#timer)
-* [fs的Promise实现](#fs)
 * [仿Nginx代理转发(支持负载均衡配置)](#agent)
+
+<h3 name="cli">命令行工具安装</h3>
+
+```javascript
+npm i -g wx-common@2.3.2
+```
+
+> 工具1：加解密工具——secret
+
+```javascript
+secret -h
+```
+
+<pre>-m              加密方式: md5,sha1,sha256,sha512,rsa2
+-pri            加密秘钥, -mac开启时, 此参数必须
+-str            需要签名的字符串
+-aes-method     对称加密方式, 例如: aes-128-ecb
+-d              如果-aes-method参数存在，-d表示解密
+-rsapri         ras私钥路径，默认值：~/.ssh/id_rsa
+-rsapub         ras公钥路径，默认值：~/.ssh/id_rsa.pub
+-result         返回值类型, hex或者base64, 默认hex
+
+------------
+如何使用RSA认证
+------------
+1. 生成公私钥
+        私钥: openssl genrsa -out ~/.ssh/id_rsa 2048
+        公钥: openssl rsa -in ~/.ssh/id_rsa -pubout -out ~/.ssh/id_rsa.pub
+2. 利用私钥生成签名串
+        secret -m=rsa2 -str=123456 -rsapri=./.ssh/id_rsa
+3. 验签
+        secret -m=rsa2 -str=123456 -rsapub=./.ssh/id_rsa.pub -pri=第二步返回的签名结果
+
+------------
+举例
+------------
+hmac sha1加密
+        secret \
+            -str=hujindi:1514861090328 \
+            -result=hex \
+            -pri=c561244e-d660-11e7-aaf8-d8a25e935567 \
+            -m=sha1
+aes对称加密
+        secret \
+            -str=Test_AES_String \
+            -result=hex \
+            -pri=2fe4a27ee9eb11e7 \
+            -aes-method=aes-128-ecb
+aes对称解密
+        secret \
+            -str=c8e8757bc9eba97898c5205443207b73 \
+            -result=hex \
+            -pri=2fe4a27ee9eb11e7 \
+            -aes-method=aes-128-ecb \
+            -d</pre>
+
+> 工具2：多线程下载工具——dl
+
+```javascript
+dl --help
+```
+
+<pre>--------------------
+Node.js多线程下载参数说明
+--------------------
+
+-o              输出文件名
+-u              下载文件路径
+-h              请求头，可多次传入
+-c              启动多少个线程，可不传，默认为cpu核数
+-s              秒数。超过这个秒数则强行终止，默认为120秒
+
+--------------------
+示例
+--------------------
+
+dl http://dl.example.com/test.file
+
+或者
+
+dl -o=./test.file -u=http://dl.example.com/test.file -h='content-type:application/json'</pre>
+
 
 <h3 name="install">安装</h3>
 
@@ -551,33 +633,6 @@ timer.CheckIsChange(interval, name);
 //设置自定义执行间隔，并立刻启动
 //name只是用来打印计时器的名字，可选参数
 timer.StartTimer(interval, name)
-```
-
-<h3 name="fs">fs的Promise实现</h3>
-
-> 引入模块
-
-```javascript
-var fs = require('fs');
-var fsPromise = require('wx-common').fs;
-```
-
-> 异步用法举例
-
-```javascript
-//创建文件夹
-fs.mkdir(path, function(err){});
-//使用fs-promise方式如下
-fsPromise.mkdir(path).then(function(){}, function(err){});
-
-//注意，只实现了异步方法，并未实现类似mkdirSync的同步方法。
-```
-
-> 使用node原生fs库
-
-```javascript
-//创建文件夹
-fsPromise.node.mkdir(path, function(err){});
 ```
 
 <h3 name="agent">仿Nginx代理转发</h3>
