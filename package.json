@@ -1,6 +1,6 @@
 {
 	"name": "wx-common",
-	"version": "2.2.8",
+	"version": "2.2.10",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/hd19861028/wx-common.git"
@@ -15,7 +15,8 @@
 		"testcase": "node_modules/.bin/mocha -u tdd test/*.js --recursive -R doc > test/testcase.html"
 	},
 	"bin": {
-		"secret": "./lib/secret-cli.js"
+		"secret": "./lib/secret-cli.js",
+		"dl": "./lib/download-cli.js"
 	},
 	"dependencies": {
 		"q": "1.4.1",
