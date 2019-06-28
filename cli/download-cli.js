@@ -2,7 +2,7 @@
 
 'use strict'
 
-var http = require('./http-request');
+var http = require('../lib/http-request');
 var fs = require('fs')
 var path = require('path')
 var url = require('url')
