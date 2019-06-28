@@ -16,7 +16,7 @@ wx-common是一个node.js模块，提供微信项目开发的公共库
 <h3 name="cli">命令行工具安装</h3>
 
 ```javascript
-npm i -g wx-common@2.3.2
+npm i -g wx-common@2.3.3
 ```
 
 > 工具1：加解密工具——secret
@@ -74,8 +74,10 @@ aes对称解密
 dl --help
 ```
 
-<pre>--------------------
-Node.js多线程下载参数说明
+<pre>Node.js多线程下载
+
+--------------------
+参数说明
 --------------------
 
 -o              输出文件名
