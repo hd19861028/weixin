@@ -37,7 +37,7 @@ var write = async function (table, content) {
 		let db = createConnection(args);
 		let sql = `select table_name from information_schema.tables where table_schema='${args.database}' and (table_type='base table' or table_type='view')`;
 		let tables = await excuteSql(db, sql);
-		
+
 		while (tables.length > 0) {
 			let item = tables.shift();
 			let table = item.table_name;
@@ -66,6 +66,7 @@ AND REFERENCED_TABLE_SCHEMA is not null`
 			let colums = await excuteSql(db, colSql);
 			let columnMapping = {};
 			let jsonTxt;
+			var splitChat = '    '
 
 			colums.forEach((col) => {
 				let temp = {};
@@ -113,7 +114,7 @@ AND REFERENCED_TABLE_SCHEMA is not null`
 							temp.type = `DataTypes.TEXT`;
 							break;
 						case "tinytext":
-							temp.type = `DataTypes..TEXT('tiny')`;
+							temp.type = `DataTypes.TEXT('tiny')`;
 							break;
 						case "date":
 						case "time":
@@ -128,7 +129,18 @@ AND REFERENCED_TABLE_SCHEMA is not null`
 				}
 
 				columnMapping[col.Field] = temp;
-				jsonTxt = JSON.stringify(columnMapping, null, 4)
+				var jsonTxtStrArray = []
+				for (let tk in columnMapping) {
+					let tv = JSON.stringify(columnMapping[tk]);
+					tv = tv
+						.replace(/\"/g, '')
+						.replace(/\{/g, '{ ')
+						.replace(/\}/g, ' }')
+						.replace(/\,/g, ', ')
+						.replace(/\:/g, ': ')
+					jsonTxtStrArray.push(`${splitChat.repeat(2)}${tk}: ${tv},`)
+				}
+				jsonTxt = `{\n${jsonTxtStrArray.join('\n')}\n${splitChat}}`
 				let index = jsonTxt.indexOf('"DataTypes');
 				while (index >= 0) {
 					let endIndex = jsonTxt.indexOf('"', index + 1);
@@ -137,10 +149,10 @@ AND REFERENCED_TABLE_SCHEMA is not null`
 				}
 				jsonTxt = jsonTxt.replace(/"DataTypes/g, 'DataTypes');
 			});
-			let template = `module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('${modelName}', ${jsonTxt}, {
-    tableName: '${table}'
-  });
+			let template = `module.exports = function (sequelize, DataTypes) {
+${splitChat.repeat(1)}return sequelize.define('${modelName}', ${jsonTxt}, {
+${splitChat.repeat(2)}tableName: '${table}'
+${splitChat.repeat(1)}});
 };
 `
 			await write(table, template);
