@@ -1,0 +1,15 @@
+{
+	"name": "build-orm",
+	"version": "1.0.0",
+	"scripts": {
+		"build": "node index"
+	},
+	"dependencies": {
+		"mysql": "^2.10.0"
+	},
+	"devDependencies": {
+		"grunt": "^1.0.1",
+		"grunt-contrib-watch": "^1.0.0",
+		"grunt-develop": "0.4.0"
+	}
+}
