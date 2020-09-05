@@ -165,43 +165,6 @@ const fs = require("fs")
 const path = require("path")
 
 const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
-const operatorsAliases = {
-	$eq: Op.eq,
-	$ne: Op.ne,
-	$gte: Op.gte,
-	$gt: Op.gt,
-	$lte: Op.lte,
-	$lt: Op.lt,
-	$not: Op.not,
-	$in: Op.in,
-	$notIn: Op.notIn,
-	$is: Op.is,
-	$like: Op.like,
-	$notLike: Op.notLike,
-	$iLike: Op.iLike,
-	$notILike: Op.notILike,
-	$regexp: Op.regexp,
-	$notRegexp: Op.notRegexp,
-	$iRegexp: Op.iRegexp,
-	$notIRegexp: Op.notIRegexp,
-	$between: Op.between,
-	$notBetween: Op.notBetween,
-	$overlap: Op.overlap,
-	$contains: Op.contains,
-	$contained: Op.contained,
-	$adjacent: Op.adjacent,
-	$strictLeft: Op.strictLeft,
-	$strictRight: Op.strictRight,
-	$noExtendRight: Op.noExtendRight,
-	$noExtendLeft: Op.noExtendLeft,
-	$and: Op.and,
-	$or: Op.or,
-	$any: Op.any,
-	$all: Op.all,
-	$values: Op.values,
-	$col: Op.col
-};
 const sequelize = new Sequelize(process.env.MYSQL_DB, process.env.MYSQL_USER, process.env.MYSQL_PWD, {
 	host: process.env.MYSQL_HOST,
 	port: process.env.MYSQL_PORT,
@@ -210,23 +173,35 @@ const sequelize = new Sequelize(process.env.MYSQL_DB, process.env.MYSQL_USER, pr
 		timestamps: false,
 	},
 	dialectOptions: {
-		multipleStatements: true
+		multipleStatements: true,
+		charset: 'utf8mb4'
 	},
+	timezone: '+08:00',
+	// isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED,
 	pool: {
-		max: 10,
-		min: 1,
-		idle: 10000
+		maxConnections: 50,
+		minConnections: 1,
+		maxIdleTime: 2000
 	},
-	operatorsAliases
+	logging: function () {
+		if (process.env.MYSQL_LOG === "1") {
+			console.log.apply(this, arguments);
+		}
+	},
+	retry: {
+		max: 99
+	},
+	benchmark: true,
 })
 
-const Redis = require('ioredis')
-const redis = new Redis({
-	host: process.env.REDIS_HOST,
-	port: process.env.REDIS_PORT,
-	password: process.env.REDIS_AUTH,
-	db: process.env.REDIS_DB,
-})
+/*
+var isolationLevel = {
+	READ_UNCOMMITTED: 'READ UNCOMMITTED',
+	READ_COMMITTED: 'READ COMMITTED',
+	REPEATABLE_READ: 'REPEATABLE READ',
+	SERIALIZABLE: 'SERIALIZABLE'
+}
+*/
 
 var db = {}
 
@@ -242,7 +217,54 @@ fs
 
 db.sequelize = sequelize
 db.Sequelize = Sequelize
-db.redis = redis
+
+const Redis = require('ioredis')
+db.redis = new Redis({
+	host: process.env.REDIS_HOST,
+	port: process.env.REDIS_PORT,
+	password: process.env.REDIS_AUTH,
+	db: process.env.REDIS_DB,
+})
+
+db.redis
+	.on('error', (err) => {
+		console.log("RedisError")
+	})
+	.on('connect', (err) => {
+		console.log("RedisConnect")
+		db.REDIS_ENABLED = true;
+	})
+	.on('reconnecting', (err) => {
+		console.log("RedisReconnecting")
+		db.REDIS_ENABLED = false;
+	})
+
+db.RedisCatchException = function () {
+	var RedisCommand = ["append", "asking", "auth", "bgrewriteaof", "bgsave", "bitcount", "bitfield", "bitop", "bitpos", "blpop", "brpop", "brpoplpush", "client", "cluster", "command", "config", "dbsize", "debug", "decr", "decrby", "del", "discard", "dump", "echo", "eval", "evalsha", "exec", "exists", "expire", "expireat", "flushall", "flushdb", "geoadd", "geodist", "geohash", "geopos", "georadius", "georadius_ro", "georadiusbymember", "georadiusbymember_ro", "get", "getbit", "getrange", "getset", "hdel", "hexists", "hget", "hgetall", "hincrby", "hincrbyfloat", "hkeys", "hlen", "hmget", "hmset", "host:", "hscan", "hset", "hsetnx", "hstrlen", "hvals", "incr", "incrby", "incrbyfloat", "info", "keys", "lastsave", "latency", "lindex", "linsert", "llen", "lpop", "lpush", "lpushx", "lrange", "lrem", "lset", "ltrim", "memory", "mget", "migrate", "module", "monitor", "move", "mset", "msetnx", "multi", "object", "persist", "pexpire", "pexpireat", "pfadd", "pfcount", "pfdebug", "pfmerge", "pfselftest", "ping", "post", "psetex", "psubscribe", "psync", "pttl", "publish", "pubsub", "punsubscribe", "quit", "randomkey", "readonly", "readwrite", "rename", "renamenx", "replconf", "restore", "restore-asking", "role", "rpop", "rpoplpush", "rpush", "rpushx", "sadd", "save", "scan", "scard", "script", "sdiff", "sdiffstore", "select", "set", "setbit", "setex", "setnx", "setrange", "shutdown", "sinter", "sinterstore", "sismember", "slaveof", "slowlog", "smembers", "smove", "sort", "spop", "srandmember", "srem", "sscan", "strlen", "subscribe", "substr", "sunion", "sunionstore", "swapdb", "sync", "time", "touch", "ttl", "type", "unlink", "unsubscribe", "unwatch", "wait", "watch", "zadd", "zcard", "zcount", "zincrby", "zinterstore", "zlexcount", "zrange", "zrangebylex", "zrangebyscore", "zrank", "zrem", "zremrangebylex", "zremrangebyrank", "zremrangebyscore", "zrevrange", "zrevrangebylex", "zrevrangebyscore", "zrevrank", "zscan", "zscore", "zunionstore"]
+	RedisCommand.forEach((cmd) => {
+		var originCmd = db.redis[cmd];
+		db.redis[cmd] = function () {
+			try {
+				//throw new Error("测试异常")
+				if (db.REDIS_ENABLED !== true) {
+					return Number.MIN_VALUE;
+				}
+
+				var v = originCmd.apply(db.redis, arguments)
+				if (v.catch) {
+					return v.catch(function (err) {
+						return Number.MIN_VALUE;
+					})
+				} else {
+					return v;
+				}
+
+			} catch (e) {
+				return Number.MIN_VALUE;
+			}
+		}
+	})
+}
 
 module.exports = db`
 		await write('index', indexTemplate);
